@@ -82,6 +82,15 @@
                  } 50
          samples 8
          } 
+		 
+ light  {
+		 type ibl2
+		 image "Untitled.hdr"
+		 center 1 0 0
+		 up 0 1 0
+		 method "random"
+		 samples 16
+		 }
 
  light  {
          type   point

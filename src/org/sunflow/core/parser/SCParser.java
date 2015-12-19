@@ -26,6 +26,7 @@ import org.sunflow.core.camera.SphericalLens;
 import org.sunflow.core.camera.ThinLens;
 import org.sunflow.core.light.DirectionalSpotlight;
 import org.sunflow.core.light.ImageBasedLight;
+import org.sunflow.core.light.ImageBasedLight2;
 import org.sunflow.core.light.PointLight;
 import org.sunflow.core.light.SphereLight;
 import org.sunflow.core.light.SunSkyLight;
@@ -1139,7 +1140,26 @@ public class SCParser implements SceneParser {
             api.parameter("samples", samples);
             ImageBasedLight ibl = new ImageBasedLight();
             ibl.init(api.getUniqueName("ibl"), api);
-        } else if (p.peekNextToken("meshlight")) {
+            
+        } else if (p.peekNextToken("ibl2")) {
+            UI.printInfo(Module.API, "Reading image based light 2 ...");
+            p.checkNextToken("image");
+            api.parameter("texture", p.getNextToken());
+            p.checkNextToken("center");
+            api.parameter("center", parseVector());
+            p.checkNextToken("up");
+            api.parameter("up", parseVector());
+            p.checkNextToken("method");
+            api.parameter("method", p.getNextToken());
+            int samples = numLightSamples;
+            if (p.peekNextToken("samples"))
+                samples = p.getNextInt();
+            else
+                UI.printWarning(Module.API, "Samples keyword not found - defaulting to %d", samples);
+            api.parameter("samples", samples);
+            ImageBasedLight2 ibl2 = new ImageBasedLight2();
+            ibl2.init(api.getUniqueName("ibl2"), api);         
+        }else if (p.peekNextToken("meshlight")) {
             p.checkNextToken("name");
             String name = p.getNextToken();
             UI.printInfo(Module.API, "Reading meshlight: %s ...", name);

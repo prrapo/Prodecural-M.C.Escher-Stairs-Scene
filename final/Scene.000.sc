@@ -4,9 +4,9 @@
 /* http://sunflow.sourceforge.net/ */
 
 
- image {
+image {
          resolution 1024  768
-         aa 0  1
+         aa 0  2
          samples 8
          filter mitchell
          jitter False
@@ -82,6 +82,15 @@
                  } 50
          samples 8
          } 
+		 
+ light  {
+		 type ibl2
+		 image "Untitled.hdr"
+		 center 1 0 0
+		 up 0 1 0
+		 method "random"
+		 samples 16
+		 }
 
  light  {
          type   point
